@@ -27,8 +27,11 @@ app.use(function(req, res, next) {
 
 
 var routes = require('./api/routes/todoListRoutes'); //importing route
+var users = require('./api/routes/userRoutes'); 
+var maps = require('./api/routes/mapRoutes'); 
 routes(app); //register the route
-
+users(app); 
+maps(app); 
 
 app.listen(port);
 
