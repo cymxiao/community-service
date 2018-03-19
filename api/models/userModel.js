@@ -13,6 +13,12 @@ var UserSchema = new Schema({
     type: String,
     required: 'Kindly enter the password'
   },
+  community_ID: {
+    type: String 
+  },
+  phoneNo: {
+    type: String 
+  },
   status: {
     type: [{
       type: String,
