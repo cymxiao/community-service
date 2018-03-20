@@ -35,10 +35,18 @@ var routes = require('./api/routes/todoListRoutes'); //importing route
 var users = require('./api/routes/userRoutes'); 
 var maps = require('./api/routes/mapRoutes'); 
 var country = require('./api/routes/countryRoutes'); 
+var city = require('./api/routes/cityRoutes'); 
+var community = require('./api/routes/communityRoutes'); 
+var carport = require('./api/routes/carportRoutes'); 
+var leisurePark = require('./api/routes/leisureParkRoutes'); 
 routes(app); //register the route
 users(app);
 maps(app); 
 country(app);
+city(app);
+community(app);
+carport(app);
+leisurePark(app);
 
 app.listen(port);
 

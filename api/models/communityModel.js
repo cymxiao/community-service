@@ -14,7 +14,8 @@ var CommunitySchema = new Schema({
     required: 'Kindly enter the name'
   },
   city_ID: {
-    type: String ,
+    type: Schema.Types.ObjectId,  
+    ref: 'cities',
     required: 'Kindly enter the city_ID'
   },
   address: {

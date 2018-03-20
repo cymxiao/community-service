@@ -5,12 +5,13 @@ var Schema = mongoose.Schema;
  
 
 var CarportSchema = new Schema({
-   parkingNumber: {
+  parkingNumber: {
     type: String,
     required: 'Kindly enter the parkingNumber'
   },
   owner_user_ID : {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'users',
     required: 'Kindly enter the owner_user_ID'
   }
 });

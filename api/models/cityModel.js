@@ -14,7 +14,8 @@ var CitySchema = new Schema({
     required: 'Kindly enter the name'
   },
   country_ID : {
-    type: String,
+    type: Schema.Types.ObjectId, 
+    ref: 'countries' ,
     required: 'Kindly enter the country_ID'
   }
 });

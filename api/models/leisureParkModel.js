@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
  
 
 var leisureParkSchema = new Schema({
-    startTime: {
+  startTime: {
     type: Date,
     required: 'Kindly enter the startTime'
   },
@@ -21,11 +21,13 @@ var leisureParkSchema = new Schema({
     default: ['available']
   },
   shared_UserID : {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'users',
     required: 'Kindly enter the shared_UserID'
   },
   applied_UserID : {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   }
 });
 
