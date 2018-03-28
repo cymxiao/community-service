@@ -9,6 +9,13 @@ var CarportSchema = new Schema({
     type: String,
     required: 'Kindly enter the parkingNumber'
   },
+  type: {
+    type: String,
+    enum: ['tiny', 'normal'] 
+  },
+  route: {
+    type: String
+  },
   owner_user_ID : {
     type: Schema.Types.ObjectId,
     ref: 'users',

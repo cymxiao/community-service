@@ -14,9 +14,17 @@ var UserSchema = new Schema({
     required: 'Kindly enter the password'
   },
   community_ID: {
-    type: String 
+    type: Schema.Types.ObjectId,  
+    ref: 'communities' 
+  },
+  role_ID: {
+    type: Schema.Types.ObjectId,  
+    ref: 'roles' 
   },
   phoneNo: {
+    type: String 
+  },
+  address: {
     type: String 
   },
   status: {

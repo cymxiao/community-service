@@ -18,6 +18,12 @@ var CommunitySchema = new Schema({
     ref: 'cities',
     required: 'Kindly enter the city_ID'
   },
+  mapid: {
+    type: String 
+  } ,
+  position: {
+    type: String 
+  } ,
   address: {
     type: String 
   } 
