@@ -21,20 +21,21 @@ mongoose.connect('mongodb://localhost/parking');
 
 //var server = require('http').createServer(app);
 //app.use(bodyParser.json({"strict":"false", "type":"*.*"}));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(function(req, res, next) {
   req.header("Content-Type","application/json");
+  console.log('global app use ');
+  console.log(req.body);
    
-  res.header("haha222222","application/x-www-form-urlencoded");
+  //res.header("haha222222","application/x-www-form-urlencoded");
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-  //res.header("Accept", "application/json");
-  // res.header("Content-Type", "application/x-www-form-urlencoded");
-  // res.setHeader("Content-Type", "application/json");
+
   next();
 });
 
