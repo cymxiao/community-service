@@ -16,12 +16,29 @@ exports.list_all_users = function(req, res) {
 
 
 exports.create_a_user = function(req, res) {
-  var new_user = new User(req.body);
+  console.log('start creating a new user');
+  console.log(req.is('text/*'));
+  console.dir(req.body);
+
+  var chunk = '',userdata;
+    req.on('data', function(data){
+        chunk += data; // here you get your raw data.
+    }) 
+    req.on('end', function(){
+        //console.log(chunk); //just show in console
+        userdata = JSON.parse(chunk); 
+    
+
+
+  //var new_user = new User(req.body);
+  console.dir(userdata);
+  var new_user = new User(userdata);
   new_user.save(function(err, task) {
     if (err)
       res.send(err);
     res.json(task);
   });
+})
 };
 
 

@@ -19,18 +19,31 @@ var express = require('express'),
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/parking'); 
 
-
+//var server = require('http').createServer(app);
+//app.use(bodyParser.json({"strict":"false", "type":"*.*"}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
+  req.header("Content-Type","application/json");
+   
+  res.header("haha222222","application/x-www-form-urlencoded");
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+  //res.header("Accept", "application/json");
+  // res.header("Content-Type", "application/x-www-form-urlencoded");
+  // res.setHeader("Content-Type", "application/json");
   next();
 });
 
+// app.use(function (rßeq, res) {
+//   res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
+//   res.setHeader('haha', 'application/x-www-form-urlencoded')
+//   res.write('you posted:\n')
+//   res.end(JSON.stringify(req.body, null, 2))
+// })
 
 //var routes = require('./api/routes/todoListRoutes'); //importing route
 var users = require('./api/routes/userRoutes'); 
@@ -60,3 +73,4 @@ console.log('Community RESTful API server started on: ' + port);
 app.use(function(req, res) {
     res.status(404).send({url: req.originalUrl + ' not found'})
   });
+ 
