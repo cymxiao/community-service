@@ -16,20 +16,16 @@ exports.list_all_users = function (req, res) {
 
 
 exports.create_a_user = function (req, res) {
-  // console.log('start creating a new user');
-  // console.log(req.is('text/*'));
-   console.log('create a user'  + req.reqData);
+
+  //console.log(req.is('text/*'));
+
   var new_user;
-  if (req.body.data) {
-    new_user = new User(req.body);
-    new_user.save(function (err, task) {
-      if (err)
-        res.send(err);
-      res.json(task);
-    });
-  } else if (req.reqData) {
-    console.log('reqData');
-    new_user = new User(req.reqData);
+  if (req.body && req.body.data) {
+    //if (req.body) {
+    console.dir(req.body);
+    var body = JSON.parse(req.body);
+
+    new_user = new User(body);
     new_user.save(function (err, task) {
       if (err)
         res.send(err);
@@ -42,10 +38,9 @@ exports.create_a_user = function (req, res) {
     })
     req.on('end', function () {
       console.log('else path'); //just show in console
+      console.log(chunk);
       userdata = JSON.parse(chunk);
-      //var new_user = new User(req.body);
-      //console.dir(userdata);
-      //console.log(req.reqData);
+      //console.log(userdata);
       new_user = new User(userdata);
       new_user.save(function (err, task) {
         if (err)
@@ -56,6 +51,14 @@ exports.create_a_user = function (req, res) {
   }
 };
 
+
+exports.login_a_user = function (req, res) {
+  User.findOne({ username: req.query.username, password: req.query.password }, function (err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
 
 exports.read_a_user = function (req, res) {
   User.findById(req.params.username, function (err, task) {

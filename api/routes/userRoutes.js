@@ -10,6 +10,9 @@ module.exports = function(app) {
     .get(user.list_all_users)
     .post(user.create_a_user);//, jsonParser);
 
+  app.route('/userlogin')
+    .get(user.login_a_user)
+
 
   app.route('/users/:userId')
     .get(user.read_a_user)
