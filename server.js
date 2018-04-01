@@ -18,78 +18,24 @@ var express = require('express'),
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/parking');
-
-
-app.use(function(req, res, next){
-  var reqData = [];
-  var size = 0;
-  req.on('data', function (data) {
-      console.log('>>>req on');
-     reqData.push(data);
-      size += data.length;
-  });
-  req.on('end', function () {
-      req.reqData = Buffer.concat(reqData, size);
-  });
-  next();
-});
-
  
 
-
-//var server = require('http').createServer(app);
-//app.use(bodyParser.json({"strict":"false", "type":"*.*"}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(bodyParser.json({
-//   verify: function (req, res, buf, encoding) {
-//       req.rawBody = buf;
-//       console.log(req.rawBody);
-//   }
-// }));
-// app.use(bodyParser.urlencoded({
-//   extended: false,
-//   verify: function (req, res, buf, encoding) {
-//       req.rawBody = buf;
-//   }
-// }));
-
+ 
 app.use(function (req, res, next) {
 
-
-  var chunk = '', customData;
-  req.on('data', function (data) {
-    chunk += data;
-  });
-  req.on('end', function () {
-    customData = JSON.parse(chunk);
-    req.reqData = customData;
-
-    req.header("Content-Type", "application/json");
-    // console.log('global app use ');
-    // console.log(req.body);
-    console.log(req.reqData);
-    //console.log(req.rawBody);
-
-    //res.header("haha222222","application/x-www-form-urlencoded");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-  });
+  //req.header("Content-Type", "application/json"); 
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+ 
   next();
 });
-
-
-// app.use(function (rßeq, res) {
-//   res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
-//   res.setHeader('haha', 'application/x-www-form-urlencoded')
-//   res.write('you posted:\n')
-//   res.end(JSON.stringify(req.body, null, 2))
-// })
-
-//var routes = require('./api/routes/todoListRoutes'); //importing route
+ 
+ 
 var users = require('./api/routes/userRoutes');
 var maps = require('./api/routes/mapRoutes');
 var country = require('./api/routes/countryRoutes');
@@ -98,7 +44,7 @@ var community = require('./api/routes/communityRoutes');
 var carport = require('./api/routes/carportRoutes');
 var leisurePark = require('./api/routes/leisureParkRoutes');
 var role = require('./api/routes/roleRoutes');
-//routes(app); //register the route
+ 
 users(app);
 maps(app);
 country(app);
@@ -108,12 +54,10 @@ carport(app);
 leisurePark(app);
 role(app);
 
-app.listen(port);
-
+app.listen(port); 
 
 console.log('Community RESTful API server started on: ' + port);
-
-
+ 
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + ' not found' })
 });
