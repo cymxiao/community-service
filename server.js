@@ -26,9 +26,9 @@ mongoose.connect('mongodb://localhost/parking');
 //temp solution, I don't how to set requet content-type to application/json, so here I use {type:'text/plain'} to match
 //the client request type, so I can get req.body here.
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 //app.use(bodyParser.json({type:'text/plain'}));
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 
  
 app.use(function (req, res, next) {
@@ -60,12 +60,9 @@ community(app);
 carport(app);
 leisurePark(app);
 role(app);
-
-app.use(bodyParser.json());
-//app.use(bodyParser.json({type:'text/plain'}));
-app.use(bodyParser.urlencoded({ extended: true }));
-
+ 
 app.listen(port); 
+app.use(bodyParser.json());
 
 console.log('Community RESTful API server started on: ' + port);
  

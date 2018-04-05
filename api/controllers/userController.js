@@ -17,7 +17,7 @@ exports.list_all_users = function (req, res) {
 
 exports.create_a_user = function (req, res) {
 
-  //console.log(req.is('text/*'));
+  console.log(req.is('text/*'));
 
   var new_user;
   if (req.body && req.body.data) {
