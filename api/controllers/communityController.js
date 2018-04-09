@@ -16,12 +16,24 @@ exports.list_all_communities = function(req, res) {
 
 
 exports.create_a_community = function(req, res) {
-  var new_country = new Community(req.body);
-  new_country.save(function(err, community) {
-    if (err)
-      res.send(err);
-    res.json(community);
-  });
+
+  var chunk = '', communitydata;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () { 
+   
+    communitydata = JSON.parse(chunk);
+    //console.log(userdata);
+    var new_community = new Community(communitydata);
+    new_community.save(function(err, community) {
+      if (err)
+        res.send(err);
+      res.json(community);
+    });
+  })
+
+
 };
 
 

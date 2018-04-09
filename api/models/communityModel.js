@@ -5,18 +5,18 @@ var Schema = mongoose.Schema;
  
 
 var CommunitySchema = new Schema({
-  code: {
-    type: String,
-    required: 'Kindly enter the code'
-  },
+  // code: {
+  //   type: String,
+  //   required: 'Kindly enter the code'
+  // },
   name: {
     type: String,
     required: 'Kindly enter the name'
   },
   city_ID: {
     type: Schema.Types.ObjectId,  
-    ref: 'cities',
-    required: 'Kindly enter the city_ID'
+    // ref: 'cities',
+    // required: 'Kindly enter the city_ID'
   },
   mapid: {
     type: String 
