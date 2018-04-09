@@ -14,7 +14,7 @@ exports.list_all_communities = function(req, res) {
   });
 };
 
-exports.find_communities = function (req, res) {
+exports.find_communities = function (req, res) { 
   Community.find({ name: community.fuzzyMatch(req.query.name) }, function (err, task) {
     if (err)
       res.send(err);
