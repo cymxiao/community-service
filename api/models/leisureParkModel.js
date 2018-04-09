@@ -20,10 +20,10 @@ var leisureParkSchema = new Schema({
     }],
     default: ['available']
   },
-  shared_UserID : {
+  carport_ID : {
     type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: 'Kindly enter the shared_UserID'
+    ref: 'carports',
+    required: 'Kindly enter the carport_ID'
   },
   applied_UserID : {
     type: Schema.Types.ObjectId,
