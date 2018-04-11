@@ -12,6 +12,14 @@ exports.list_all_leisureParks = function (req, res) {
   });
 };
 
+exports.list_leisureParks_for_Owner = function (req, res) {
+  LeisurePark.find({ shared_UserID : req.params.ownerId}, function (err, leisurePark) {
+    if (err)
+      res.send(err);
+    res.json(leisurePark);
+  });
+};
+
 
 exports.read_a_leisurePark = function (req, res) {
   LeisurePark.findById(req.params.taskId, function (err, leisurePark) {

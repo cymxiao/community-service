@@ -11,4 +11,7 @@ module.exports = function(app) {
     .get(leisurePark.read_a_leisurePark)
     .put(leisurePark.update_a_leisurePark)
     .delete(leisurePark.delete_a_leisurePark);
+
+  app.route('/getleisurePark/:ownerId')
+    .get(leisurePark.list_leisureParks_for_Owner);
 };
