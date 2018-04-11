@@ -70,11 +70,30 @@ exports.read_a_user = function (req, res) {
 
 
 exports.update_a_user = function (req, res) {
-  User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true }, function (err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
+  //console.log(req.body);
+  var chunk = '', userdata;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () { 
+   
+    userdata = JSON.parse(chunk);
+    //console.log(userdata);
+    // var new_community = new Community(userdata);
+    // new_community.save(function(err, community) {
+    //   if (err)
+    //     res.send(err);
+    //   res.json(community);
+    // });
+    //console.log(userdata);
+    User.findOneAndUpdate({ _id: req.params.userId }, userdata, { new: true }, function (err, task) {
+      if (err)
+        res.send(err);
+      res.json(task);
+    });
+  })
+
+  
 };
 
 
