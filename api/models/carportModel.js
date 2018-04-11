@@ -11,7 +11,8 @@ var CarportSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ['tiny', 'normal'] 
+    enum: ['tiny', 'normal'] ,
+    default:'normal'
   },
   route: {
     type: String

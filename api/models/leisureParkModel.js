@@ -27,8 +27,23 @@ var leisureParkSchema = new Schema({
   },
   applied_UserID : {
     type: Schema.Types.ObjectId,
+    ref: 'users' 
+  },
+  shared_UserID : {
+    type: Schema.Types.ObjectId,
     ref: 'users'
-  }
+  },
+  priceUnit: {
+    type: [{
+      type: String,
+      enum: ['hour','day',  'month']
+    }],
+    default: ['day']
+  },
+  price: {
+    type : Number,
+    required:'Kindly enter the price'
+  },
 });
 
 module.exports = mongoose.model('leisurePark', leisureParkSchema);

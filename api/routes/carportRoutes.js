@@ -12,4 +12,7 @@ module.exports = function(app) {
     .get(carport.read_a_carport)
     .put(carport.update_a_carport)
     .delete(carport.delete_a_carport);
+
+  app.route('/searchcarport/:ownerId')
+    .get(carport.find_carport_list);
 };

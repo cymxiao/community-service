@@ -54,7 +54,8 @@ exports.create_a_community = function(req, res) {
 
 
 exports.read_a_community = function(req, res) {
-    Community.findById(req.params.taskId, function(err, community) {
+  //console.log(req);
+    Community.findById(req.params.communityId, function(err, community) {
     if (err)
       res.send(err);
     res.json(community);
