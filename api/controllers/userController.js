@@ -17,7 +17,7 @@ exports.list_all_users = function (req, res) {
 
 exports.create_a_user = function (req, res) {
 
-  console.log(req.is('text/*'));
+  //console.log(req.is('text/*'));
 
   var new_user;
   if (req.body && req.body.data) {
@@ -37,16 +37,29 @@ exports.create_a_user = function (req, res) {
       chunk += data; // here you get your raw data.
     })
     req.on('end', function () {
-      console.log('else path'); //just show in console
-      console.log(chunk);
+      // console.log('else path'); //just show in console
+      // console.log(chunk);
       userdata = JSON.parse(chunk);
-      //console.log(userdata);
-      new_user = new User(userdata);
-      new_user.save(function (err, task) {
+
+
+      User.findOne({username: userdata.username}, function (err, task) {
         if (err)
           res.send(err);
-        res.json(task);
+          //check if username already exist
+        if(!task){
+          //console.log(userdata);
+          new_user = new User(userdata);
+          new_user.save(function (err, task) {
+            if (err)
+              res.send(err);
+            res.json(task);
+          });
+        } else {
+           res.json({duplicateUsername : true});
+        }
+        
       });
+     
     })
   }
 };
@@ -54,6 +67,15 @@ exports.create_a_user = function (req, res) {
 
 exports.login_a_user = function (req, res) {
   User.findOne({ username: req.query.username, password: req.query.password }, function (err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+
+exports.get_user_by_username = function (req, res) {
+  User.findOne({username :req.params.username}, function (err, task) {
     if (err)
       res.send(err);
     res.json(task);

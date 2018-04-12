@@ -14,6 +14,9 @@ module.exports = function(app) {
     .get(user.login_a_user)
 
 
+  app.route('/users/:username')
+    .get(user.get_user_by_username);
+
     //should be called as req.params.userId
   app.route('/users/:userId')
     .get(user.read_a_user)

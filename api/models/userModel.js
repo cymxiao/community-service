@@ -27,6 +27,7 @@ var UserSchema = new Schema({
   address: {
     type: String 
   },
+  timestamp: { type: Date, default: Date.now },
   status: {
     type: [{
       type: String,

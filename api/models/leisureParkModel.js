@@ -16,9 +16,9 @@ var leisureParkSchema = new Schema({
   status: {
     type: [{
       type: String,
-      enum: ['待审核', '可申请', '已失效']
+      enum: ['pending', 'active', 'invalid']
     }],
-    default: ['可申请']
+    default: ['active']
   },
   carport_ID : {
     type: Schema.Types.ObjectId,
@@ -33,6 +33,11 @@ var leisureParkSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
+  //it's great to add community forein key here. It's used to make statistic of avaiable carports by community..
+  community_ID: {
+    type: Schema.Types.ObjectId,  
+    ref: 'communities' 
+  },
   priceUnit: {
     type: [{
       type: String,
@@ -44,6 +49,7 @@ var leisureParkSchema = new Schema({
     type : Number,
     required:'Kindly enter the price'
   },
+  timestamp : { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('leisurePark', leisureParkSchema);
