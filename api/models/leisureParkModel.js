@@ -16,9 +16,9 @@ var leisureParkSchema = new Schema({
   status: {
     type: [{
       type: String,
-      enum: ['pending', 'available', 'unavailable']
+      enum: ['待审核', '可申请', '已失效']
     }],
-    default: ['available']
+    default: ['可申请']
   },
   carport_ID : {
     type: Schema.Types.ObjectId,

@@ -2,8 +2,12 @@
 
 
 var mongoose = require('mongoose'),
+  //Carport = mongoose.model('carport'),
+  cp = require('../models/carportModel'),
+  Carport = mongoose.model('carport', cp.schema),
   LeisurePark = mongoose.model('leisurePark');
-
+ 
+  
 exports.list_all_leisureParks = function (req, res) {
   LeisurePark.find({}, function (err, leisurePark) {
     if (err)
@@ -13,11 +17,13 @@ exports.list_all_leisureParks = function (req, res) {
 };
 
 exports.list_leisureParks_for_Owner = function (req, res) {
+  //console.dir(cc.schema);
   LeisurePark.find({ shared_UserID : req.params.ownerId}, function (err, leisurePark) {
     if (err)
       res.send(err);
     res.json(leisurePark);
-  });
+  }).populate([{path:'carport_ID', model : Carport }]);
+  //}).populate('carport_ID');
 };
 
 
