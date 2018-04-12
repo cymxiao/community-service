@@ -14,4 +14,7 @@ module.exports = function(app) {
 
   app.route('/getleisurePark/:ownerId')
     .get(leisurePark.list_leisureParks_for_Owner);
+
+  app.route('/groupleisurePark')
+    .get(leisurePark.groupCountbyCommunity)
 };
