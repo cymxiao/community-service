@@ -15,6 +15,9 @@ module.exports = function(app) {
   app.route('/getleisurePark/:ownerId')
     .get(leisurePark.list_leisureParks_for_Owner);
   
+  app.route('/getleisureParkforApplier/:applierId')
+    .get(leisurePark.list_leisureParks_for_Applier);
+  
   app.route('/getleisureParkbyCom/:comId/:ownerId')
     .get(leisurePark.list_leisureParks_by_Community);
 

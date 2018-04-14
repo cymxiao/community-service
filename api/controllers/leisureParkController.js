@@ -30,6 +30,16 @@ exports.list_leisureParks_for_Owner = function (req, res) {
   //}).populate('carport_ID');
 };
 
+exports.list_leisureParks_for_Applier = function (req, res) { 
+  LeisurePark.find({ applied_UserID : req.params.applierId}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+    if (err)
+      res.send(err);
+    res.json(leisurePark);
+  }).populate([{path:'carport_ID', model : Carport }]);
+  //.sort({ timestamp : 1}) 
+  //}).populate('carport_ID');
+};
+
 exports.list_leisureParks_by_Community = function (req, res) { 
   LeisurePark.find({ community_ID : req.params.comId, status : 'active', 
         shared_UserID: { "$ne": req.params.ownerId }, startTime : {"$lte": Date.now() } , endTime: {"$gte": Date.now() }
