@@ -2,6 +2,8 @@
 
 
 var mongoose = require('mongoose'),
+  com = require('../models/communityModel'),
+  Community = mongoose.model('community', com.schema),
   User = mongoose.model('users');
 
 exports.list_all_users = function (req, res) {
@@ -42,24 +44,22 @@ exports.create_a_user = function (req, res) {
       userdata = JSON.parse(chunk);
 
 
-      User.findOne({username: userdata.username}, function (err, task) {
+      User.findOne({ username: userdata.username }, function (err, task) {
         if (err)
           res.send(err);
-          //check if username already exist
-        if(!task){
+        //check if username already exist
+        if (!task) {
           //console.log(userdata);
           new_user = new User(userdata);
           new_user.save(function (err, task) {
             if (err)
               res.send(err);
             res.json(task);
-          });
+          });//.populate([{ path: 'community_ID', model: Community }]);
         } else {
-           res.json({duplicateUsername : true});
+          res.json({ duplicateUsername: true });
         }
-        
       });
-     
     })
   }
 };
@@ -70,12 +70,12 @@ exports.login_a_user = function (req, res) {
     if (err)
       res.send(err);
     res.json(task);
-  });
+  }).populate([{ path: 'community_ID', model: Community }]);
 };
 
 
 exports.get_user_by_username = function (req, res) {
-  User.findOne({username :req.params.username}, function (err, task) {
+  User.findOne({ username: req.params.username }, function (err, task) {
     if (err)
       res.send(err);
     res.json(task);
@@ -97,25 +97,16 @@ exports.update_a_user = function (req, res) {
   req.on('data', function (data) {
     chunk += data; // here you get your raw data.
   })
-  req.on('end', function () { 
-   
+  req.on('end', function () {
+
     userdata = JSON.parse(chunk);
-    //console.log(userdata);
-    // var new_community = new Community(userdata);
-    // new_community.save(function(err, community) {
-    //   if (err)
-    //     res.send(err);
-    //   res.json(community);
-    // });
-    //console.log(userdata);
+
     User.findOneAndUpdate({ _id: req.params.userId }, userdata, { new: true }, function (err, task) {
       if (err)
         res.send(err);
       res.json(task);
-    });
+    }).populate([{ path: 'community_ID', model: Community }]);
   })
-
-  
 };
 
 

@@ -4,9 +4,11 @@
 var mongoose = require('mongoose'),
   //Carport = mongoose.model('carport'),
   cp = require('../models/carportModel'),
+  u = require('../models/userModel'),
   Carport = mongoose.model('carport', cp.schema),
-  com = require('../models/communityModel'),
-  Community = mongoose.model('community', com.schema),
+  //com = require('../models/communityModel'),
+  User = require('../models/userModel',u.schema),
+  //Community = mongoose.model('community', com.schema),
   LeisurePark = mongoose.model('leisurePark');
  
   
@@ -27,6 +29,17 @@ exports.list_leisureParks_for_Owner = function (req, res) {
   //.sort({ timestamp : 1}) 
   //}).populate('carport_ID');
 };
+
+exports.list_leisureParks_by_Community = function (req, res) { 
+  LeisurePark.find({ community_ID : req.params.comId, status : 'active', 
+        shared_UserID: { "$ne": req.params.ownerId }, startTime : {"$lte": Date.now() } , endTime: {"$gte": Date.now() }
+      }, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+    if (err)
+      res.send(err);
+    res.json(leisurePark);
+  }).populate([{path:'carport_ID', model : Carport }]).populate([{path:'shared_UserID', model : User }]); 
+};
+
 
 
 exports.groupCountbyCommunity = function (req, res) {
@@ -87,10 +100,19 @@ exports.create_a_leisurePark = function (req, res) {
 
 
 exports.update_a_leisurePark = function (req, res) {
-  LeisurePark.findOneAndUpdate({ _id: req.params.taskId }, req.body, { new: true }, function (err, leisurePark) {
-    if (err)
-      res.send(err);
-    res.json(leisurePark);
+
+  var chunk = '', data;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () {
+
+    data = JSON.parse(chunk);
+    LeisurePark.findOneAndUpdate({ _id: req.params.leisureParkId }, data, { new: true }, function (err, leisurePark) {
+      if (err)
+        res.send(err);
+      res.json(leisurePark);
+    });
   });
 };
 

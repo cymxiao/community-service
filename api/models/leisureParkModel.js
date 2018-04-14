@@ -16,7 +16,7 @@ var leisureParkSchema = new Schema({
   status: {
     type: [{
       type: String,
-      enum: ['pending', 'active', 'invalid']
+      enum: ['pending', 'active','applied', 'invalid']
     }],
     default: ['active']
   },

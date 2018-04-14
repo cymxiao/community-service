@@ -9,11 +9,14 @@ module.exports = function(app) {
 
   app.route('/leisurePark/:leisureParkId')
     .get(leisurePark.read_a_leisurePark)
-    .put(leisurePark.update_a_leisurePark)
+    .post(leisurePark.update_a_leisurePark)
     .delete(leisurePark.delete_a_leisurePark);
 
   app.route('/getleisurePark/:ownerId')
     .get(leisurePark.list_leisureParks_for_Owner);
+  
+  app.route('/getleisureParkbyCom/:comId/:ownerId')
+    .get(leisurePark.list_leisureParks_by_Community);
 
   app.route('/groupleisurePark')
     .get(leisurePark.groupCountbyCommunity)
