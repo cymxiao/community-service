@@ -11,6 +11,11 @@ var mongoose = require('mongoose'),
   //Community = mongoose.model('community', com.schema),
   LeisurePark = mongoose.model('leisurePark');
  
+//   var moment = require('moment');
+// var moment = require('moment-timezone');
+// var zone = 'Asia/Shanghai';
+// var dtNow = moment(Date.now()).tz(zone).format();
+
   
 exports.list_all_leisureParks = function (req, res) {
   LeisurePark.find({}, function (err, leisurePark) {
@@ -18,6 +23,10 @@ exports.list_all_leisureParks = function (req, res) {
       res.send(err);
     res.json(leisurePark);
   });
+};
+
+exports.testTime = function (req, res) {
+   res.json({mtime: dtNow , mtime2: moment(), mTime3: moment(new Date()), jsTime: new Date(), jsTime2: Date.now()});
 };
 
 exports.list_leisureParks_for_Owner = function (req, res) { 
@@ -53,10 +62,14 @@ exports.list_leisureParks_by_Community = function (req, res) {
 
 
 exports.groupCountbyCommunity = function (req, res) {
-  var rules = [{ 'priceUnit': 'day' }]; //, {price: {$gte: 200}}
+  var rules = [{ 'priceUnit': 'day' } ,{status : 'active'}]; //, {price: {$gte: 200}}
+  //var unMatchRules = [{ 'priceUnit': 'day' }];
   LeisurePark.aggregate([
     {
-      $match: { $and: rules }
+      //Amin !IMP:  startTime : { $lte : new Date(Date.now())} , I should use new Date(...) here, otherwise it would return empty query result. 
+      //$match: { $and: rules  , price : { $gt : 0}} 
+      //$match: { startTime : { $lt : Date.now().toLocaleString()} }
+      $match: {  $and: rules  , startTime : { $lte : new Date(Date.now())}, endTime: {"$gte": new Date(Date.now()) }}
     },
     {
       $group: {

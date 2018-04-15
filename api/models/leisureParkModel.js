@@ -1,5 +1,11 @@
 'use strict';
 var mongoose = require('mongoose');
+// var moment = require('moment');
+// var moment = require('moment-timezone');
+// var zone = 'Asia/Shanghai';
+// var dtNow = moment(Date.now()).tz(zone).format();
+//moment().tz("Asia/Shanghai").format();
+//moment().tz()
 var Schema = mongoose.Schema;
 
  

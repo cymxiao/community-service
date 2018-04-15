@@ -23,4 +23,7 @@ module.exports = function(app) {
 
   app.route('/groupleisurePark')
     .get(leisurePark.groupCountbyCommunity)
+
+  // app.route('/testTime')
+  //   .get(leisurePark.testTime);
 };
