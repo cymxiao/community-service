@@ -22,8 +22,14 @@ module.exports = function(app) {
     .get(leisurePark.list_leisureParks_by_Community);
 
   app.route('/groupleisurePark')
-    .get(leisurePark.groupCountbyCommunity)
+    .get(leisurePark.groupCountbyCommunity);
 
-  // app.route('/testTime')
-  //   .get(leisurePark.testTime);
+  app.route('/checkStartTime/:comId/:ownerId/:cpId/:startTime')
+    .get(leisurePark.checkStartTime);
+
+  app.route('/checkEndTime/:comId/:ownerId/:cpId/:endTime')
+    .get(leisurePark.checkEndTime);
+
+  app.route('/testTime')
+    .get(leisurePark.testTime);
 };

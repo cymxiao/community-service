@@ -26,11 +26,12 @@ exports.list_all_leisureParks = function (req, res) {
 };
 
 exports.testTime = function (req, res) {
-   res.json({mtime: dtNow , mtime2: moment(), mTime3: moment(new Date()), jsTime: new Date(), jsTime2: Date.now()});
+   //res.json({mtime: dtNow , mtime2: moment(), mTime3: moment(new Date()), jsTime: new Date(), jsTime2: Date.now()});
+   res.json({  jsTime: new Date(), jsTime2: Date.now() , jsTime3: Date.now });
 };
 
 exports.list_leisureParks_for_Owner = function (req, res) { 
-  LeisurePark.find({ shared_UserID : req.params.ownerId}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+  LeisurePark.find({ shared_UserID : req.params.ownerId , startTime : {"$lte": new Date()} , endTime: {"$gte": new Date() }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
     res.json(leisurePark);
@@ -38,6 +39,26 @@ exports.list_leisureParks_for_Owner = function (req, res) {
   //.sort({ timestamp : 1}) 
   //}).populate('carport_ID');
 };
+
+exports.checkStartTime = function (req, res) { 
+  console.log( req.params.startTime );
+  LeisurePark.findOne({  community_ID : req.params.comId, status : 'active', shared_UserID : req.params.ownerId , carport_ID: req.params.cpId, startTime : {"$lte": req.params.startTime} , endTime: {"$gte": req.params.startTime }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+    if (err)
+      res.send(err);
+    res.json(leisurePark);
+  }); 
+};
+
+exports.checkEndTime = function (req, res) { 
+  console.log( req.params.endTime );
+  LeisurePark.findOne({  community_ID : req.params.comId, status : 'active', shared_UserID : req.params.ownerId , carport_ID: req.params.cpId,  endTime: {"$gte": req.params.endTime }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+    if (err)
+      res.send(err);
+    res.json(leisurePark);
+  }); 
+};
+
+
 
 exports.list_leisureParks_for_Applier = function (req, res) { 
   LeisurePark.find({ applied_UserID : req.params.applierId}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
@@ -51,7 +72,7 @@ exports.list_leisureParks_for_Applier = function (req, res) {
 
 exports.list_leisureParks_by_Community = function (req, res) { 
   LeisurePark.find({ community_ID : req.params.comId, status : 'active', 
-        shared_UserID: { "$ne": req.params.ownerId }, startTime : {"$lte": Date.now() } , endTime: {"$gte": Date.now() }
+        shared_UserID: { "$ne": req.params.ownerId }, startTime : {"$lte": new Date() } , endTime: {"$gte": new Date() }
       }, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
