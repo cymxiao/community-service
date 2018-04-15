@@ -53,10 +53,14 @@ exports.list_leisureParks_by_Community = function (req, res) {
 
 
 exports.groupCountbyCommunity = function (req, res) {
-  var rules = [{ 'priceUnit': 'day' }]; //, {price: {$gte: 200}}
+  var rules = [{ 'priceUnit': 'day' } ,{status : 'active'}]; //, {price: {$gte: 200}}
+  //var unMatchRules = [{ 'priceUnit': 'day' }];
   LeisurePark.aggregate([
     {
-      $match: { $and: rules }
+      //Amin !IMP:  startTime : { $lte : new Date(Date.now())} , I should use new Date(...) here, otherwise it would return empty query result. 
+      //$match: { $and: rules  , price : { $gt : 0}} 
+      //$match: { startTime : { $lt : Date.now().toLocaleString()} }
+      $match: {  $and: rules  , startTime : { $lte : new Date(Date.now())}, endTime: {"$gte": new Date(Date.now()) }}
     },
     {
       $group: {
