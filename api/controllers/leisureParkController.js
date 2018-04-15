@@ -31,7 +31,7 @@ exports.testTime = function (req, res) {
 };
 
 exports.list_leisureParks_for_Owner = function (req, res) { 
-  LeisurePark.find({ shared_UserID : req.params.ownerId , startTime : {"$lte": new Date()} , endTime: {"$gte": new Date() }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+  LeisurePark.find({ shared_UserID : req.params.ownerId ,  endTime: {"$gte": new Date() }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
     res.json(leisurePark);
@@ -72,7 +72,7 @@ exports.list_leisureParks_for_Applier = function (req, res) {
 
 exports.list_leisureParks_by_Community = function (req, res) { 
   LeisurePark.find({ community_ID : req.params.comId, status : 'active', 
-        shared_UserID: { "$ne": req.params.ownerId }, startTime : {"$lte": new Date() } , endTime: {"$gte": new Date() }
+        shared_UserID: { "$ne": req.params.ownerId },  endTime: {"$gte": new Date() }
       }, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
@@ -90,7 +90,7 @@ exports.groupCountbyCommunity = function (req, res) {
       //Amin !IMP:  startTime : { $lte : new Date(Date.now())} , I should use new Date(...) here, otherwise it would return empty query result. 
       //$match: { $and: rules  , price : { $gt : 0}} 
       //$match: { startTime : { $lt : Date.now().toLocaleString()} }
-      $match: {  $and: rules  , startTime : { $lte : new Date(Date.now())}, endTime: {"$gte": new Date(Date.now()) }}
+      $match: {  $and: rules  ,  endTime: {"$gte": new Date(Date.now()) }}
     },
     {
       $group: {
