@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
   User = mongoose.model('users');
 
 exports.list_all_users = function (req, res) {
-  User.find({}, function (err, task) {
+  User.find({},null, {sort: { timestamp: -1 }} , function (err, task) {
     if (err)
       res.send(err);
     res.json(task);
@@ -66,6 +66,10 @@ exports.create_a_user = function (req, res) {
 
 
 exports.login_a_user = function (req, res) {
+  if(req.query.password.indexOf(' ')>=0){
+    req.query.password = req.query.password.replace(' ','+');
+  }
+  //console.log(req.query.password);
   User.findOne({ username: req.query.username, password: req.query.password }, function (err, task) {
     if (err)
       res.send(err);
