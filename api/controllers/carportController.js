@@ -51,12 +51,20 @@ exports.create_a_carport = function (req, res) {
 
 };
 
-exports.update_a_carport = function (req, res) {
-  Carport.findOneAndUpdate({ _id: req.params.taskId }, req.body, { new: true }, function (err, carport) {
-    if (err)
-      res.send(err);
-    res.json(carport);
-  });
+exports.update_a_carport = function (req, res) { 
+  var chunk = '', data;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () {
+
+    data = JSON.parse(chunk);
+    Carport.findOneAndUpdate({ _id: req.params.carportId }, data, { new: true }, function (err, carport) {
+      if (err)
+        res.send(err);
+      res.json(carport);
+    });
+  }); 
 };
 
 

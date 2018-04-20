@@ -17,6 +17,10 @@ var CarportSchema = new Schema({
   route: {
     type: String
   },
+  isCurrent: {
+    type: Boolean,
+    default: false
+  },
   owner_user_ID : {
     type: Schema.Types.ObjectId,
     ref: 'users',
