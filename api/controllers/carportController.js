@@ -30,6 +30,7 @@ exports.find_carport_list = function (req, res) {
   });
 };
 
+// async await await
 exports.create_a_carport = function (req, res) {
   var chunk = '', carportdata;
   req.on('data', function (data) {
@@ -37,21 +38,29 @@ exports.create_a_carport = function (req, res) {
   })
   req.on('end', function () {
 
-    carportdata = JSON.parse(chunk); 
-
-    var new_carport = new Carport(carportdata);
-    new_carport.save(function (err, carport) {
-      if (err)
-        res.send(err);
-      res.json(carport);
+    carportdata = JSON.parse(chunk);
+    Carport.findOne({ community_ID: carportdata.community_ID, parkingNumber: carportdata.parkingNumber }).then(isDupicate => {
+      if (isDupicate && isDupicate._id) {
+        res.json({ parkingNumber: '-1' });
+      } else {
+        Carport.find({ community_ID: carportdata.community_ID, owner_user_ID: carportdata.owner_user_ID }).then(cpOfOwner => { 
+          if (cpOfOwner && cpOfOwner.length > 3) {
+            res.json({ parkingNumber: '-3' });
+          } else {
+            var new_carport = new Carport(carportdata);
+            new_carport.save(function (err, carport) {
+              if (err)
+                res.send(err);
+              res.json(carport);
+            });
+          }
+        })
+      }
     });
-  })
-
-
-
+  });
 };
 
-exports.update_a_carport = function (req, res) { 
+exports.update_a_carport = function (req, res) {
   var chunk = '', data;
   req.on('data', function (data) {
     chunk += data; // here you get your raw data.
@@ -64,7 +73,7 @@ exports.update_a_carport = function (req, res) {
         res.send(err);
       res.json(carport);
     });
-  }); 
+  });
 };
 
 

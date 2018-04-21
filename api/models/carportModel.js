@@ -21,6 +21,10 @@ var CarportSchema = new Schema({
     type: Boolean,
     default: false
   },
+  community_ID: {
+    type: Schema.Types.ObjectId,
+    ref: 'communities'
+  },
   owner_user_ID : {
     type: Schema.Types.ObjectId,
     ref: 'users',
