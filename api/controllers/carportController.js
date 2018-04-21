@@ -44,7 +44,7 @@ exports.create_a_carport = function (req, res) {
       if (isDupicate && isDupicate._id) {
         res.json({ parkingNumber: '-1' });
       } else {
-        Carport.find({ community_ID: carportdata.community_ID, owner_user_ID: carportdata.owner_user_ID }).then(cpOfOwner => { 
+        Carport.find({ community_ID: carportdata.community_ID, owner_user_ID: carportdata.owner_user_ID }).then(cpOfOwner => {
           //console.dir(cpOfOwner);
           if (cpOfOwner && cpOfOwner.length > 2) {
             res.json({ parkingNumber: '-3' });
@@ -75,6 +75,34 @@ exports.update_a_carport = function (req, res) {
         res.send(err);
       res.json(carport);
     });
+  });
+};
+
+
+// exports.update_carports_for_owner = function (req, res) {
+//   //console.log(req.params.ownerId);
+//   Carport.find({ community_ID: req.params.comId, owner_user_ID: req.params.ownerId }, function (err, carport) {
+//     if (err)
+//       res.send(err);
+//     res.json(carport);
+//   });
+// };
+
+exports.update_carports_for_owner = function (req, res) {
+  var chunk = '', data;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () {
+ 
+    data = JSON.parse(chunk);
+  // console.log({ community_ID: req.params.comId, owner_user_ID: req.params.ownerId });
+  // console.log({ $set: data });
+    Carport.updateMany({ community_ID: req.params.comId, owner_user_ID: req.params.ownerId }, { $set: data }, function (err, result) {
+      if (err)
+        res.send(err);
+      res.json(result);
+    }); 
   });
 };
 
