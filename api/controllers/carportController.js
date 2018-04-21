@@ -39,12 +39,14 @@ exports.create_a_carport = function (req, res) {
   req.on('end', function () {
 
     carportdata = JSON.parse(chunk);
+    //console.log(carportdata);
     Carport.findOne({ community_ID: carportdata.community_ID, parkingNumber: carportdata.parkingNumber }).then(isDupicate => {
       if (isDupicate && isDupicate._id) {
         res.json({ parkingNumber: '-1' });
       } else {
         Carport.find({ community_ID: carportdata.community_ID, owner_user_ID: carportdata.owner_user_ID }).then(cpOfOwner => { 
-          if (cpOfOwner && cpOfOwner.length > 3) {
+          //console.dir(cpOfOwner);
+          if (cpOfOwner && cpOfOwner.length > 2) {
             res.json({ parkingNumber: '-3' });
           } else {
             var new_carport = new Carport(carportdata);
