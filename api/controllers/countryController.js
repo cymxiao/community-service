@@ -4,8 +4,8 @@
 var mongoose = require('mongoose'),
   Country = mongoose.model('country');
 
-exports.list_all_countries = function(req, res) {
-  Country.find({}, function(err, country) {
+exports.list_all_countries = function (req, res) {
+  Country.find({}, function (err, country) {
     if (err)
       res.send(err);
     res.json(country);
@@ -15,13 +15,23 @@ exports.list_all_countries = function(req, res) {
 
 
 
-exports.create_a_country = function(req, res) {
-  var new_country = new Country(req.body);
-  new_country.save(function(err, country) {
-    if (err)
-      res.send(err);
-    res.json(country);
-  });
+exports.create_a_country = function (req, res) {
+
+  var chunk = '', countryData;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () {
+
+    countryData = JSON.parse(chunk);
+    //console.log(userdata);
+    var new_country = new Country(countryData);
+    new_country.save(function (err, country) {
+      if (err)
+        res.send(err);
+      res.json(country);
+    });
+  })
 };
 
 
