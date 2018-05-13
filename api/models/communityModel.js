@@ -18,6 +18,10 @@ var CommunitySchema = new Schema({
     // ref: 'cities',
     // required: 'Kindly enter the city_ID'
   },
+  //property management company
+  PMC:{
+    type: String
+  },
   mapid: {
     type: String 
   } ,

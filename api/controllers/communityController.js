@@ -55,7 +55,7 @@ exports.create_a_community = function(req, res) {
 
 exports.read_a_community = function(req, res) {
   //console.log(req);
-    Community.findById(req.params.communityId, function(err, community) {
+    Community.findById(req.params.comId, function(err, community) {
     if (err)
       res.send(err);
     res.json(community);
@@ -63,23 +63,20 @@ exports.read_a_community = function(req, res) {
 };
 
 
-// exports.update_a_task = function(req, res) {
-//   Task.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
 
+exports.update_a_community = function (req, res) {
 
-// exports.delete_a_task = function(req, res) {
+  var chunk = '', data;
+  req.on('data', function (data) {
+    chunk += data; // here you get your raw data.
+  })
+  req.on('end', function () {
 
-
-//   Task.remove({
-//     _id: req.params.taskId
-//   }, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json({ message: 'Task successfully deleted' });
-//   });
-//};
+    data = JSON.parse(chunk);
+    Community.findOneAndUpdate({ _id: req.params.comId }, data, { new: true }, function (err, community) {
+      if (err)
+        res.send(err);
+      res.json(community);
+    });
+  });
+};

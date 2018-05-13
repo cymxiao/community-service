@@ -17,9 +17,12 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,  
     ref: 'communities' 
   },
-  role_ID: {
-    type: Schema.Types.ObjectId,  
-    ref: 'roles' 
+  role: {
+    type: [{
+      type: String,
+      enum: ['PMCUser','proprietor', 'externalUser']
+    }],
+    default:['externalUser']
   },
   phoneNo: {
     type: String 
@@ -27,11 +30,14 @@ var UserSchema = new Schema({
   address: {
     type: String 
   },
+  name: {
+    type: String
+  },
   timestamp: { type: Date, default: Date.now },
   status: {
     type: [{
       type: String,
-      enum: ['active', 'blocked', 'deleted']
+      enum: ['pendingOnVerify','active', 'blocked', 'deleted']
     }],
     default: ['active']
   }

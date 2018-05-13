@@ -10,7 +10,7 @@ module.exports = function(app) {
   app.route('/findcommunity')
     .get(community.find_communities)
 
-  app.route('/community/:communityId')
-    .get(community.read_a_community);
- 
+  app.route('/community/:comId')
+    .get(community.read_a_community)
+    .post(community.update_a_community);
 };
