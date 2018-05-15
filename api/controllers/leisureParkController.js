@@ -70,14 +70,28 @@ exports.list_leisureParks_for_Applier = function (req, res) {
   //}).populate('carport_ID');
 };
 
-exports.list_leisureParks_by_Community = function (req, res) { 
-  LeisurePark.find({ community_ID : req.params.comId, status : 'active', 
-        shared_UserID: { "$ne": req.params.ownerId },  endTime: {"$gte": new Date() }
-      }, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
-    if (err)
-      res.send(err);
-    res.json(leisurePark);
-  }).populate([{path:'carport_ID', model : Carport }]).populate([{path:'shared_UserID', model : User }]); 
+exports.list_leisureParks_by_Community = function (req, res) {
+  //if -1, it would list all the share leisurepark of the community
+  if (req.params.ownerId === -10) {
+    LeisurePark.find({
+      community_ID: req.params.comId, 
+      // status: { "$ne": 'invalid' },
+      endTime: { "$gte": new Date() }
+    }, null, { sort: { timestamp: -1 } }, function (err, leisurePark) {
+      if (err)
+        res.send(err);
+      res.json(leisurePark);
+    }).populate([{ path: 'carport_ID', model: Carport }]).populate([{ path: 'shared_UserID', model: User }]);
+  } else { 
+    LeisurePark.find({
+      community_ID: req.params.comId, status: 'active',
+      shared_UserID: { "$ne": req.params.ownerId }, endTime: { "$gte": new Date() }
+    }, null, { sort: { timestamp: -1 } }, function (err, leisurePark) {
+      if (err)
+        res.send(err);
+      res.json(leisurePark);
+    }).populate([{ path: 'carport_ID', model: Carport }]).populate([{ path: 'shared_UserID', model: User }]);
+  }
 };
 
 
