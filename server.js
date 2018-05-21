@@ -51,7 +51,8 @@ var community = require('./api/routes/communityRoutes');
 var carport = require('./api/routes/carportRoutes');
 var leisurePark = require('./api/routes/leisureParkRoutes');
 var role = require('./api/routes/roleRoutes');
- 
+var sms = require('./api/routes/smsRoutes'); 
+
 users(app);
 maps(app);
 country(app);
@@ -60,6 +61,7 @@ community(app);
 carport(app);
 leisurePark(app);
 role(app);
+sms(app);
  
 app.listen(port); 
 app.use(bodyParser.json());
