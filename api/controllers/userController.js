@@ -57,7 +57,7 @@ exports.create_a_user = function (req, res) {
             res.json(task);
           });//.populate([{ path: 'community_ID', model: Community }]);
         } else {
-          res.json({ duplicateUsername: true });
+          res.json({ _id:task._id ,duplicateUsername: true });
         }
       });
     })
