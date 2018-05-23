@@ -72,7 +72,7 @@ exports.list_leisureParks_for_Applier = function (req, res) {
 
 exports.list_leisureParks_by_Community = function (req, res) {
   //if -1, it would list all the share leisurepark of the community
-  if (req.params.ownerId === -10) {
+  if (req.params.ownerId === '000000000000000000000000') {
     LeisurePark.find({
       community_ID: req.params.comId, 
       // status: { "$ne": 'invalid' },
