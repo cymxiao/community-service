@@ -17,7 +17,7 @@ var express = require('express'),
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/parking');
+mongoose.connect('mongodb://localhost:27017/parking');
  
 //The bodyParser object exposes various factories to create middlewares. All middlewares 
 //will populate the req.body property with the parsed body when the Content-Type request header matches 
