@@ -41,7 +41,7 @@ exports.list_leisureParks_for_Owner = function (req, res) {
 };
 
 exports.checkStartTime = function (req, res) { 
-  console.log( req.params.startTime );
+  //console.log( req.params.startTime );
   LeisurePark.findOne({  community_ID : req.params.comId, status : 'active', shared_UserID : req.params.ownerId , carport_ID: req.params.cpId, startTime : {"$lte": req.params.startTime} , endTime: {"$gte": req.params.startTime }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
@@ -50,8 +50,16 @@ exports.checkStartTime = function (req, res) {
 };
 
 exports.checkEndTime = function (req, res) { 
-  console.log( req.params.endTime );
+  //console.log( req.params.endTime );
   LeisurePark.findOne({  community_ID : req.params.comId, status : 'active', shared_UserID : req.params.ownerId , carport_ID: req.params.cpId,  endTime: {"$gte": req.params.endTime }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+    if (err)
+      res.send(err);
+    res.json(leisurePark);
+  }); 
+};
+
+exports.getStartTimeforNext = function (req, res) { 
+  LeisurePark.findOne({  community_ID : req.params.comId, status : 'active', shared_UserID : req.params.ownerId , carport_ID: req.params.cpId }, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
     res.json(leisurePark);

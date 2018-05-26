@@ -30,6 +30,9 @@ module.exports = function(app) {
   app.route('/checkEndTime/:comId/:ownerId/:cpId/:endTime')
     .get(leisurePark.checkEndTime);
 
+  app.route('/getStartTimeforNext/:comId/:ownerId/:cpId')
+    .get(leisurePark.getStartTimeforNext);
+
   app.route('/testTime')
     .get(leisurePark.testTime);
 };
