@@ -6,8 +6,10 @@ module.exports = function(app) {
 
 app.route('/members')
 .get(xjMember.list_all_xjMembers)
-.post(xjMember.create_a_xjMember);
+.post(xjMember.save_a_xjMember);
 
+app.route('/member/:name') 
+.get(xjMember.get_a_xjMember); 
 
 app.route('/member/:xjMemberId') 
 .post(xjMember.update_a_xjMember); 

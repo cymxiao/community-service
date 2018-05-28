@@ -10,7 +10,7 @@ var xjMemberSchema = new Schema({
     required: 'Kindly enter the name'
   },
   birthday: {
-    type: String,
+    type: Date,
     required: 'Kindly enter the birthday'
   },
   cellPhone: {
