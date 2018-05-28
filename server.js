@@ -1,7 +1,7 @@
 var express = require('express'),
   app = express(),
 
-
+//Amin:IMP.  Each time add a new route, please check server.js
 
   port = process.env.PORT || 3000,
   mongoose = require('mongoose'),
@@ -13,6 +13,7 @@ var express = require('express'),
   Carport = require('./api/models/carportModel'),
   LeisurePark = require('./api/models/leisureParkModel'),
   Role = require('./api/models/roleModel'),
+  xmMember = require('./api/models/xjMemberModel'),
   bodyParser = require('body-parser');
 
 // mongoose instance connection url connection
@@ -52,6 +53,7 @@ var carport = require('./api/routes/carportRoutes');
 var leisurePark = require('./api/routes/leisureParkRoutes');
 var role = require('./api/routes/roleRoutes');
 var sms = require('./api/routes/smsRoutes'); 
+var member = require('./api/routes/xjMemberRoutes'); 
 
 users(app);
 maps(app);
@@ -62,6 +64,7 @@ carport(app);
 leisurePark(app);
 role(app);
 sms(app);
+member(app);
  
 app.listen(port); 
 app.use(bodyParser.json());
