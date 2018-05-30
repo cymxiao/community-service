@@ -17,6 +17,9 @@ var xjMemberSchema = new Schema({
     type: Number,  
      
   }, 
+  email:{
+    type: String,
+  },
   address: {
     type: String 
   }, 

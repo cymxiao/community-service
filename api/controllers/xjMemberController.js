@@ -2,19 +2,24 @@
 
 
 var mongoose = require('mongoose'),
- 
+
   xjMember = mongoose.model('xjMembers');
 
 exports.list_all_xjMembers = function (req, res) {
-    xjMember.find({},null, {sort: { birthday: 1 }} , function (err, task) {
+  let sortExpresion = { timestamp: -1 };
+  if (req.params.sortByBth && req.params.sortByBth === '1') {
+    sortExpresion = { birthday: 1 };
+  } 
+  xjMember.find({}, null, { sort: sortExpresion }, function (err, task) {
     if (err)
       res.send(err);
     res.json(task);
   });
 };
 
+
 exports.get_a_xjMember = function (req, res) {
-  xjMember.findOne({name:req.params.name}, function (err, task) {
+  xjMember.findOne({ name: req.params.name }, function (err, task) {
     if (err)
       res.send(err);
     res.json(task);
@@ -24,7 +29,7 @@ exports.get_a_xjMember = function (req, res) {
 
 
 exports.save_a_xjMember = function (req, res) {
- 
+
   var new_user;
   if (req.body && req.body.data) {
     //if (req.body) {
@@ -45,15 +50,15 @@ exports.save_a_xjMember = function (req, res) {
     req.on('end', function () {
       // console.log('else path'); //just show in console
       // console.log(chunk);
-      userdata = JSON.parse(chunk); 
-      let searchCreteria={};
-      if(userdata.cellPhone){
+      userdata = JSON.parse(chunk);
+      let searchCreteria = {};
+      if (userdata.cellPhone) {
         searchCreteria = { name: userdata.name, cellPhone: userdata.cellPhone };
       } else {
         searchCreteria = { name: userdata.name }
       }
- 
-      xjMember.findOne( searchCreteria , function (err, task) {
+
+      xjMember.findOne(searchCreteria, function (err, task) {
         if (err)
           res.send(err);
         //check if username already exist
@@ -78,7 +83,7 @@ exports.save_a_xjMember = function (req, res) {
   }
 };
 
- 
+
 exports.update_a_xjMember = function (req, res) {
   //console.log(req.body);
   var chunk = '', userdata;
@@ -98,8 +103,8 @@ exports.update_a_xjMember = function (req, res) {
 };
 
 
-exports.delete_a_xjMember = function (req, res) { 
-   xjMember.remove({
+exports.delete_a_xjMember = function (req, res) {
+  xjMember.remove({
     _id: req.params.xjMemberId
   }, function (err, task) {
     if (err)
