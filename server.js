@@ -19,6 +19,7 @@ var express = require('express'),
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/parking');
+
  
 //The bodyParser object exposes various factories to create middlewares. All middlewares 
 //will populate the req.body property with the parsed body when the Content-Type request header matches 
@@ -71,6 +72,19 @@ app.use(bodyParser.json());
 
 console.log('Community RESTful API server started on: ' + port);
  
+
+const mongoDb = mongoose.connection;
+
+  mongoDb.on('error', (x) => {
+    //console.log('Unable to connect to database!'); 
+    //Amin: IMP.It's better to throw error here. If not throw x, client side would try about  30 secs to connect to this service, Bad UI experience.
+    throw x;
+  });
+
+  // mongoDb.once('open', () => {
+  //   //console.log('Connect to database successful.');
+  // });
+
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + ' not found' })
 });
