@@ -33,6 +33,9 @@ var UserSchema = new Schema({
   name: {
     type: String
   },
+  carPlate: {
+    type: String
+  },
   lastLoginDate: { type: Date },
   timestamp: { type: Date, default: Date.now },
   status: {
