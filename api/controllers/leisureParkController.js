@@ -85,7 +85,8 @@ exports.list_leisureParks_by_Community = function (req, res) {
       community_ID: req.params.comId, 
       // status: { "$ne": 'invalid' },
       endTime: { "$gte": new Date() }
-    }, null, { sort: { timestamp: -1 } }, function (err, leisurePark) {
+      //order by date ascending
+    }, null, { sort: { timestamp: 1 } }, function (err, leisurePark) {
       if (err)
         res.send(err);
       res.json(leisurePark);
