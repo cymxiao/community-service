@@ -90,7 +90,9 @@ exports.list_leisureParks_by_Community = function (req, res) {
       if (err)
         res.send(err);
       res.json(leisurePark);
-    }).populate([{ path: 'carport_ID', model: Carport }]).populate([{ path: 'shared_UserID', model: User }]);
+    }).populate([{ path: 'carport_ID', model: Carport }])
+      .populate([{ path: 'shared_UserID', model: User }])
+      .populate([{ path: 'applied_UserID', model: User }]);
   } else { 
     LeisurePark.find({
       community_ID: req.params.comId, status: 'active',
