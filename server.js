@@ -27,11 +27,6 @@ mongoose.connect('mongodb://localhost:27017/parking');
 
 //temp solution, I don't how to set requet content-type to application/json, so here I use {type:'text/plain'} to match
 //the client request type, so I can get req.body here.
-
-//app.use(bodyParser.json());
-//app.use(bodyParser.json({type:'text/plain'}));
-//app.use(bodyParser.urlencoded({ extended: false }));
-
  
 app.use(function (req, res, next) {
 
@@ -41,7 +36,8 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
  
-  next();
+  //add return before next(), it may resolve issue like: Can't set headers after they are sent.
+  return next();
 });
  
  
@@ -69,7 +65,8 @@ member(app);
  
 app.listen(port); 
 app.use(bodyParser.json());
-
+//Amin:IMP the following line resolve issue like: Can't set headers after they are sent.
+app.disable('etag');
 console.log('Community RESTful API server started on: ' + port);
  
 
@@ -86,5 +83,6 @@ const mongoDb = mongoose.connection;
   // });
 
 app.use(function (req, res) {
-  res.status(404).send({ url: req.originalUrl + ' not found' })
+  res.status(404).send({ url: req.originalUrl + ' not found' });
+  res.end();
 });
