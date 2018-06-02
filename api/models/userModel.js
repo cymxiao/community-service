@@ -17,6 +17,10 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,  
     ref: 'communities' 
   },
+  account_ID: {
+    type: Schema.Types.ObjectId,  
+    ref: 'accounts' 
+  },
   role: {
     type: [{
       type: String,

@@ -13,6 +13,7 @@ var express = require('express'),
   Carport = require('./api/models/carportModel'),
   LeisurePark = require('./api/models/leisureParkModel'),
   Role = require('./api/models/roleModel'),
+  Account = require('./api/models/accountModel'),
   xmMember = require('./api/models/xjMemberModel'),
   bodyParser = require('body-parser');
 
@@ -49,7 +50,8 @@ var community = require('./api/routes/communityRoutes');
 var carport = require('./api/routes/carportRoutes');
 var leisurePark = require('./api/routes/leisureParkRoutes');
 var role = require('./api/routes/roleRoutes');
-var sms = require('./api/routes/smsRoutes'); 
+var account = require('./api/routes/accountRoutes'); 
+var sms = require('./api/routes/smsRoutes');  
 var member = require('./api/routes/xjMemberRoutes'); 
 
 users(app);
@@ -60,6 +62,7 @@ community(app);
 carport(app);
 leisurePark(app);
 role(app);
+account(app);
 sms(app);
 member(app);
  
