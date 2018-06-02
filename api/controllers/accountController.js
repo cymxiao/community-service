@@ -43,7 +43,8 @@ exports.update_a_account = function (req, res) {
     req.on('end', function () {
   
       data = JSON.parse(chunk);
-      Account.findOneAndUpdate({ user_ID: req.params.userId }, data, { new: true }, function (err, acnt) {
+      //Account.findOneAndUpdate({ user_ID: req.params.userId },   data , { new: true }, function (err, acnt) {
+      Account.findOneAndUpdate({ user_ID: req.params.userId }, {'$inc': data }, { new: true }, function (err, acnt) {
         if (err)
           res.send(err);
         res.json(acnt);
