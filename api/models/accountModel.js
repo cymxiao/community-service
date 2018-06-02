@@ -15,6 +15,7 @@ var AccountSchema = new Schema({
     ref: 'users' 
   }, 
   timestamp: { type: Date, default: Date.now },
+  obsoleteTime: { type: Date },
   status: {
     type: [{
       type: String,
