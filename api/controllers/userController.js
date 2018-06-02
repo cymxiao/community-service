@@ -55,7 +55,9 @@ exports.create_a_user = function (req, res) {
             if (err)
               res.send(err);
             res.json(task);
-          });//.populate([{ path: 'community_ID', model: Community }]);
+          });
+          //Cannot read property 'populate' of undefined
+          //}).populate([{ path: 'community_ID', model: Community }]);
         } else {
           res.json({ _id:task._id ,duplicateUsername: true });
         }

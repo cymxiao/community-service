@@ -78,8 +78,10 @@ exports.list_leisureParks_for_Applier = function (req, res) {
   //}).populate('carport_ID');
 };
 
+
 exports.list_leisureParks_by_Community = function (req, res) {
-  //if -1, it would list all the share leisurepark of the community
+  //if 000000000000000000000000, it would list all the share leisurepark of the community
+  //Amin:Tocheck It used for PMC dashboard, so applied_UserID should be defined or emtpy. it's not null or undefined.
   if (req.params.ownerId === '000000000000000000000000') {
     LeisurePark.find({
       community_ID: req.params.comId, 
