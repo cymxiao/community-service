@@ -24,7 +24,7 @@ var UserSchema = new Schema({
   role: {
     type: [{
       type: String,
-      enum: ['PMCUser','proprietor', 'externalUser']
+      enum: ['PMCUser','superAdministator', 'externalUser']
     }],
     default:['externalUser']
   },
