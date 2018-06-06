@@ -111,8 +111,7 @@ exports.list_leisureParks_by_Community = function (req, res) {
 
 exports.groupCountbyCommunity = function (req, res) {
   //Amin:tocheck  status is a array column, it seems works in aggregate
-  var rules = [{ 'priceUnit': 'day' } ,{status : 'active'}]; //, {price: {$gte: 200}}
-  //var unMatchRules = [{ 'priceUnit': 'day' }];
+  var rules = [{ priceUnit: '天' } ,{status : 'active'}]; //, {price: {$gte: 200}} 
   LeisurePark.aggregate([
     {
       //Amin !IMP:  startTime : { $lte : new Date(Date.now())} , I should use new Date(...) here, otherwise it would return empty query result. 
