@@ -12,12 +12,12 @@ var Schema = mongoose.Schema;
 
 var leisureParkSchema = new Schema({
   startTime: {
-    type: Date,
-    required: 'Kindly enter the startTime'
+    type: Date
+    //required: 'Kindly enter the startTime'
   },
   endTime: {
-    type: Date,
-    required: 'Kindly enter the endTime'
+    type: Date
+    //required: 'Kindly enter the endTime'
   },
   status: {
     type: [{
