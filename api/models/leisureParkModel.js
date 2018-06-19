@@ -55,6 +55,9 @@ var leisureParkSchema = new Schema({
     type: Number,
     required: 'Kindly enter the price'
   },
+  serviceTime: {
+    type: String
+  },
   timestamp: { type: Date, default: Date.now },
 });
 
