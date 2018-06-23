@@ -88,6 +88,16 @@ exports.get_user_by_username = function (req, res) {
   });
 };
 
+
+exports.get_active_PMC_user_by_communityid = function (req, res) {
+  User.findOne({ community_ID: req.params.comId, role: { $all: ["PMCUser"] } , status: { $all: ['active'] } }, function (err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+
 exports.read_a_user = function (req, res) {
   User.findById(req.params.username, function (err, task) {
     if (err)

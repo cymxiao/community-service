@@ -5,6 +5,9 @@ module.exports = function(app) {
  
   app.route('/pmcusers/:status')
     .get(user.get_pmc_users_by_status);
+  
+  app.route('/activePMCusers/:comId')
+    .get(user.get_active_PMC_user_by_communityid);
  
   app.route('/users') 
     .post(user.create_a_user);//, jsonParser);
