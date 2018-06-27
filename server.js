@@ -17,6 +17,7 @@ var express = require('express'),
   xmMember = require('./api/models/xjMemberModel'),
   bodyParser = require('body-parser');
 
+ 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/parking');
@@ -28,7 +29,9 @@ mongoose.connect('mongodb://localhost:27017/parking');
 
 //temp solution, I don't how to set requet content-type to application/json, so here I use {type:'text/plain'} to match
 //the client request type, so I can get req.body here.
- 
+//app.use(bodyParser.urlencoded({ extended: false }));
+//Amin: Temp.  Use chunk data temparary.
+
 app.use(function (req, res, next) {
 
   //req.header("Content-Type", "application/json"); 
@@ -54,6 +57,15 @@ var account = require('./api/routes/accountRoutes');
 var sms = require('./api/routes/smsRoutes');  
 var member = require('./api/routes/xjMemberRoutes'); 
 
+//Amin:IMP The following two lines should before route definition.
+// Install 'body-parser' from npm.
+// then open app.ts --> write - > var bodyParser = require('body-parser');
+// then you need to write app.use(bodyParser.json()) in app.ts module
+// keep in mind that you include app.use(bodyParser.json()) in the top or before any module declaration Ex: app.use(bodyParser.json()) app.use('/user',user);
+// Then use var postdata = req.body;
+
+//app.use(bodyParser.json()); 
+//app.use(bodyParser.json({ type: 'application/*+json' }));
 users(app);
 maps(app);
 country(app);
@@ -64,10 +76,14 @@ leisurePark(app);
 role(app);
 account(app);
 sms(app);
-member(app);
- 
+member(app); 
+
 app.listen(port); 
+//Amin: infact, the following one code doesn't work
 app.use(bodyParser.json());
+//app.use(bodyParser.json({ type: 'application/*+json' }));
+//app.use(bodyParser.text({type:'text/plain'}));
+//app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 //Amin:IMP the following line resolve issue like: Can't set headers after they are sent.
 app.disable('etag');
 console.log('Community RESTful API server started on: ' + port);
