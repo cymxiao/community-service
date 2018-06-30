@@ -79,7 +79,7 @@ sms(app);
 member(app); 
 
 app.listen(port); 
-//Amin: infact, the following one code doesn't work
+//Amin: infact, the following one code doesn't work, I should put it prior than  any route definition , such as line 60
 app.use(bodyParser.json());
 //app.use(bodyParser.json({ type: 'application/*+json' }));
 //app.use(bodyParser.text({type:'text/plain'}));
