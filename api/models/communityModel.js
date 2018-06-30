@@ -31,8 +31,8 @@ var CommunitySchema = new Schema({
     default: ['天']
   },
   price: {
-    type: Number,
-    required: 'Kindly enter the price'
+    type: Number 
+    //required: 'Kindly enter the price'
   },
   mapid: {
     type: String 
