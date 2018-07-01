@@ -40,6 +40,9 @@ var UserSchema = new Schema({
   carPlate: {
     type: String
   },
+  agreedLicense: {
+    type: Boolean
+  },
   lastLoginDate: { type: Date },
   timestamp: { type: Date, default: Date.now },
   status: {
