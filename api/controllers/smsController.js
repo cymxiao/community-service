@@ -39,7 +39,7 @@ exports.sendSMS = function (req, res) {
         "to": req.params.cellPhone,
         // cellPhone: "13816873730",
         // verifyCode: "123789"
-        "content": '【享停车】 您的验证码是' + req.params.verifyCode + '，请在10分钟内输入。'
+        "content": '【快易停】 您的验证码是' + req.params.verifyCode + '，请在10分钟内输入。'
     });
     console.log(new Date());
     console.dir(smsBody);
