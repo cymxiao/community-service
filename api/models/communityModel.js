@@ -4,11 +4,7 @@ var Schema = mongoose.Schema;
 
  
 
-var CommunitySchema = new Schema({
-  // code: {
-  //   type: String,
-  //   required: 'Kindly enter the code'
-  // },
+var CommunitySchema = new Schema({ 
   name: {
     type: String,
     required: 'Kindly enter the name'
@@ -42,7 +38,10 @@ var CommunitySchema = new Schema({
   } ,
   address: {
     type: String 
-  } 
+  } ,
+  isInternalSharing : {
+    type: Boolean
+  },
 });
 
 module.exports = mongoose.model('community', CommunitySchema);
