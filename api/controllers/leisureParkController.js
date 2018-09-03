@@ -31,7 +31,7 @@ exports.testTime = function (req, res) {
 };
 
 exports.list_leisureParks_for_Owner = function (req, res) { 
-  LeisurePark.find({ shared_UserID : req.params.ownerId ,  endTime: {"$gte": new Date() }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
+  LeisurePark.find({ shared_UserID : req.params.ownerId , status: { "$ne": 'invalid' }, endTime: {"$gte": new Date() }}, null, {sort: { timestamp: -1 }}, function (err, leisurePark) {
     if (err)
       res.send(err);
     res.json(leisurePark);
@@ -98,7 +98,9 @@ exports.list_leisureParks_by_Community = function (req, res) {
   } else { 
     LeisurePark.find({
       community_ID: req.params.comId, status: 'active',
-      shared_UserID: { "$ne": req.params.ownerId }, endTime: { "$gte": new Date() }
+      //Amin: remove this condition, user can't apply the leisurepark which relased by himself, so it's better to disable the apply buttons 
+      //shared_UserID: { "$ne": req.params.ownerId }, endTime: { "$gte": new Date() }
+      endTime: { "$gte": new Date() }
     }, null, { sort: { timestamp: -1 } }, function (err, leisurePark) {
       if (err)
         res.send(err);
