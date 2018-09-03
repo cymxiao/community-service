@@ -58,6 +58,9 @@ var leisureParkSchema = new Schema({
   serviceTime: {
     type: String
   },
+  isInternalSharing : {
+    type: Boolean
+  },
   timestamp: { type: Date, default: Date.now },
 });
 
